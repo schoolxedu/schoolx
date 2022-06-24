@@ -1,8 +1,13 @@
-from curses.ascii import US
-from dataclasses import field, fields
+from dataclasses import field
 from django.forms import ModelForm
-from .models import Room
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import Room, User
+
+
+class MyUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['name', 'username', 'email', 'password1', 'password2']
 
 
 class RoomForm(ModelForm):
@@ -15,10 +20,10 @@ class RoomForm(ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['avatar', 'name', 'username', 'email', 'bio']
 
 
-class LoginForm(ModelForm):
+class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
